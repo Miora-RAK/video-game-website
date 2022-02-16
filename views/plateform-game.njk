@@ -1,12 +1,9 @@
 {% extends "layout.njk" %}
 {% block content %}
   <h1> Hello World! </h1>
-   <p>
-  {%for plateform in plateformsAcces%}
-  <li><a href="/plateform">{{plateform.name}}</a></li>
+  {%for game in gameAcces%}
+  <li><a href="#">{{game.name}}</a></li>
   {%else%}
   <li> It is empty </li>
   {%endfor%}
-  </p>
 {% endblock %}
-

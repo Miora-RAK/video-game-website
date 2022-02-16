@@ -1,0 +1,12 @@
+{% extends "layout.njk" %}
+{% block content %}
+  <h1> Hello World! </h1>
+   <p>
+  {%for plateform in plateformsAcces%}
+  <li> {{plateform.name}}</li>
+  {%else%}
+  <li> It is empty </li>
+  {%endfor%}
+  </p>
+{% endblock %}
+

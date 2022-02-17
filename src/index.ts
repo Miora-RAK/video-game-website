@@ -18,7 +18,6 @@ app.get("/", (request, response) => {
       throw error;
     }
     const plateform = JSON.parse(body);
-    console.log(plateform);
     response.render("home", { plateformsAccess: plateform.platforms });
   });
 });
@@ -31,8 +30,20 @@ app.get("/:idPlateform", (request, response) => {
       throw error;
     }
     const game = JSON.parse(body);
-    console.log(game);
     response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
+  });
+});
+
+app.get("/:idPlateform/:slugGame", (request, response) => {
+  const slugParameters = request.params;
+  const slugSelected = slugParameters.idPlateform;
+  apiCaller(`http://videogame-api.fly.dev/games/${slugSelected}`, (error, body) => {
+    if (error) {
+      throw error;
+    }
+    const gameDetails = JSON.parse(body);
+    console.log(gameDetails);
+    response.render("game-details", { detailsGame: gameDetails.screenshots, parameterValue: slugSelected });
   });
 });
 

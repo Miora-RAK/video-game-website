@@ -1,15 +1,18 @@
 {% extends "layout.njk" %}
 {% block content %}
+{# ------ TITLE ------- #}
   <h1> Welcome to the GAME CATALOGUE! </h1>
-   <p>
+{# ------ TITLE END------- #}
+
+{# ------ PLATEFORMS ------- #}
   {%for plateform in plateformsAccess%}
     <li>
-      <a href = "/{{plateform.logo.url}}"><img src="{{plateform.logo.url}}" alt="{{plateform.name}}" /></a>
+      <a href = "/{{plateform.logo.url}}"><img class="image" src="{{plateform.logo.url}}" alt="{{plateform.name}}" /></a>
       <a href="/{{plateform.id}}">{{plateform.name}}</a>
     </li>
   {%else%}
     <li> It is empty </li>
   {%endfor%}
-  </p>
+{# ------ PLATEFORMS END ------- #}
 {% endblock %}
 

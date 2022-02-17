@@ -1,14 +1,19 @@
 {% extends "layout.njk" %}
 {% block content %}
+{# ------ TITLE ------- #}
 <h1> ALL GAMES </h1>
+{# ------ TITLE END------- #}
+
+{# ------ GAME LIST ------- #}
   {%for game in gamesAccess%}
-  <li>
-  <img href = "/{{game.cover.url}}"src="{{game.cover.url}}" alt="{{game.name}}"/>
-  <a href="/{{game.id}}/{{game.name}}">{{game.name}}</a>
-  </li>
+      <li>
+         <img class="image" href = "/{{game.cover.url}}"src="{{game.cover.url}}" alt="{{game.name}}"/>
+         <a href="/{{game.id}}/{{game.name}}">{{game.name}}</a>
+      </li>
   {%else%}
-  <li> It is empty </li>
+      <li> It is empty </li>
   {%endfor%}
+{# ------ GAME LIST END ------- #}
 {% endblock %}
 
 

@@ -52,6 +52,20 @@ app.get("/:idPlateform/:slugGame", (request, response) => {
 });
 /* ------ GAME-DETAILS END  ------- */
 
+/* ------ PAGINATION  ------- */
+
+app.get("/:idPlateform?page=page_number", (request, response) => {
+  const queryParameters = request.query.page_number;
+  apiCaller(`http://videogame-api.fly.dev/games/${queryParameters}`, (error, body) => {
+    if (error) {
+      throw error;
+    }
+    const page = JSON.parse(body);
+    response.render("game-details", { page: page.pages, parameterValue: queryParameters });
+  });
+});
+/* ------ PAGINATION END  ------- */
+
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");
 });

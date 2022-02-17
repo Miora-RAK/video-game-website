@@ -1,0 +1,12 @@
+{% extends "layout.njk" %}
+{% block content %}
+ <h1> DETAILS </h1>
+  {%for game in detailsGame%}
+  <li>
+  <img href = "{{game.url}}"src="{{game.url}}"/>
+  </li>
+   {%else%}
+  <li> It is empty </li>
+  {%endfor%}
+{% endblock %}
+

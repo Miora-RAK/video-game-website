@@ -1,10 +1,10 @@
 {% extends "layout.njk" %}
 {% block content %}
-  <h1> Hello World! </h1>
+  <h1> Welcome to the GAME CATALOGUE! </h1>
    <p>
   {%for plateform in plateformsAccess%}
     <li>
-      <img href = "/{{plateform.logo.url}}"src="{{plateform.logo.url}}" alt="{{plateform.name}}" />
+      <a href = "/{{plateform.logo.url}}"><img src="{{plateform.logo.url}}" alt="{{plateform.name}}" /></a>
       <a href="/{{plateform.id}}">{{plateform.name}}</a>
     </li>
   {%else%}

@@ -1,10 +1,10 @@
 {% extends "layout.njk" %}
 {% block content %}
-  <h1> Hi! </h1>
+<h1> ALL GAMES </h1>
   {%for game in gamesAccess%}
   <li>
   <img href = "/{{game.cover.url}}"src="{{game.cover.url}}" alt="{{game.name}}"/>
-  <a href="#">{{game.name}}</a>
+  <a href="/{{game.id}}/{{game.name}}">{{game.name}}</a>
   </li>
   {%else%}
   <li> It is empty </li>

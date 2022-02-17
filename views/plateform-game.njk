@@ -2,11 +2,12 @@
 {% block content %}
   <h1> Hi! </h1>
   {%for game in gamesAccess%}
-   {% if parameterValue === plateform.id%}
-  <li><a href="#">{{game.name}}</a></li>
+  <li>
+  <img href = "/{{game.cover.url}}"src="{{game.cover.url}}" alt="{{game.name}}"/>
+  <a href="#">{{game.name}}</a>
+  </li>
   {%else%}
   <li> It is empty </li>
-  {% endif %}
   {%endfor%}
 {% endblock %}
 

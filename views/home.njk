@@ -4,9 +4,8 @@
    <p>
   {%for plateform in plateformsAccess%}
     <li>
-        <img src="/{{plateform.url}}" alt="{{plateform.name}}" />
-        <a href="/{{plateform.id}}">{{plateform.name}}</a>
-
+      <img href = "/{{plateform.logo.url}}"src="{{plateform.logo.url}}" alt="{{plateform.name}}" />
+      <a href="/{{plateform.id}}">{{plateform.name}}</a>
     </li>
   {%else%}
     <li> It is empty </li>

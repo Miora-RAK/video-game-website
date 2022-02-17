@@ -10,24 +10,40 @@ nunjucks.configure("views", {
 });
 app.set("view engine", "njk");
 
+app.use(express.static("public"));
+
 app.get("/", (request, response) => {
   apiCaller("http://videogame-api.fly.dev/platforms", (error, body) => {
     if (error) {
       throw error;
     }
     const plateform = JSON.parse(body);
-    response.render("home", { plateformsAcces: plateform.platforms });
+    response.render("home", { plateformsAccess: plateform.platforms });
   });
 });
 
-app.get("/plateform", (request, response) => {
-  apiCaller(`http://videogame-api.fly.dev/games/platforms/19c9dcae-80a2-e137-50ff-11b823738827`, (error, body) => {
+app.get("/:idPlateform", (request, response) => {
+  // function getPlateformId(id: string): void {
+  type Plateform = {
+    id: string;
+    name: string;
+    slug: string;
+    category: string;
+    platforms: [];
+    cover: [];
+  };
+  const idParameters = request.params;
+  const idSelected = idParameters.idPlateform;
+  apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
     if (error) {
       throw error;
     }
     const game = JSON.parse(body);
     console.log(game);
-    response.render("plateform-game.njk", { gameAcces: game.games });
+    const findNamePlateform = game.games.find((plateform: Plateform) => plateform.id === idSelected);
+    if (findNamePlateform) {
+      response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
+    }
   });
 });
 

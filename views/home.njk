@@ -2,10 +2,14 @@
 {% block content %}
   <h1> Hello World! </h1>
    <p>
-  {%for plateform in plateformsAcces%}
-  <li><a href="/plateform">{{plateform.name}}</a></li>
+  {%for plateform in plateformsAccess%}
+    <li>
+        <img src="/{{plateform.url}}" alt="{{plateform.name}}" />
+        <a href="/{{plateform.id}}">{{plateform.name}}</a>
+
+    </li>
   {%else%}
-  <li> It is empty </li>
+    <li> It is empty </li>
   {%endfor%}
   </p>
 {% endblock %}

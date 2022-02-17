@@ -18,20 +18,12 @@ app.get("/", (request, response) => {
       throw error;
     }
     const plateform = JSON.parse(body);
+    console.log(plateform);
     response.render("home", { plateformsAccess: plateform.platforms });
   });
 });
 
 app.get("/:idPlateform", (request, response) => {
-  // function getPlateformId(id: string): void {
-  type Plateform = {
-    id: string;
-    name: string;
-    slug: string;
-    category: string;
-    platforms: [];
-    cover: [];
-  };
   const idParameters = request.params;
   const idSelected = idParameters.idPlateform;
   apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
@@ -40,10 +32,7 @@ app.get("/:idPlateform", (request, response) => {
     }
     const game = JSON.parse(body);
     console.log(game);
-    const findNamePlateform = game.games.find((plateform: Plateform) => plateform.id === idSelected);
-    if (findNamePlateform) {
-      response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
-    }
+    response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
   });
 });
 

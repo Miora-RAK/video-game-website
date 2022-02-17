@@ -12,6 +12,7 @@ app.set("view engine", "njk");
 
 app.use(express.static("public"));
 
+/* ------ PLATEFORMS  ------- */
 app.get("/", (request, response) => {
   apiCaller("http://videogame-api.fly.dev/platforms", (error, body) => {
     if (error) {
@@ -21,7 +22,9 @@ app.get("/", (request, response) => {
     response.render("home", { plateformsAccess: plateform.platforms });
   });
 });
+/* ------ PLATEFORMS END  ------- */
 
+/* ------ GAME-LIST  ------- */
 app.get("/:idPlateform", (request, response) => {
   const idParameters = request.params;
   const idSelected = idParameters.idPlateform;
@@ -33,7 +36,9 @@ app.get("/:idPlateform", (request, response) => {
     response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
   });
 });
+/* ------ GAME-LIST END ------- */
 
+/* ------ GAME DETAILS  ------- */
 app.get("/:idPlateform/:slugGame", (request, response) => {
   const slugParameters = request.params;
   const slugSelected = slugParameters.idPlateform;
@@ -42,10 +47,10 @@ app.get("/:idPlateform/:slugGame", (request, response) => {
       throw error;
     }
     const gameDetails = JSON.parse(body);
-    console.log(gameDetails);
     response.render("game-details", { detailsGame: gameDetails.screenshots, parameterValue: slugSelected });
   });
 });
+/* ------ GAME-DETAILS END  ------- */
 
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");

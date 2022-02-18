@@ -14,7 +14,7 @@ app.use(express.static("public"));
 
 /* ------ PLATEFORMS  ------- */
 app.get("/", (request, response) => {
-  apiCaller("http://videogame-api.fly.dev/platforms", (error, body) => {
+  apiCaller(`http://videogame-api.fly.dev/platforms`, (error, body) => {
     if (error) {
       throw error;
     }
@@ -28,14 +28,35 @@ app.get("/", (request, response) => {
 app.get("/:idPlateform", (request, response) => {
   const idParameters = request.params;
   const idSelected = idParameters.idPlateform;
-  apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
-    if (error) {
-      throw error;
-    }
-    const game = JSON.parse(body);
-    response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
-  });
+  console.log(31, request.query);
+  const pageParameters = request.query.page?.toString();
+  console.log(33, pageParameters);
+  if (pageParameters === "string" && parseInt(pageParameters) > 1) {
+    apiCaller(
+      `http://videogame-api.fly.dev/games/plateforms/${idSelected}?page=${parseInt(pageParameters)}`,
+      (error, body) => {
+        if (error) {
+          throw error;
+        }
+        const page = JSON.parse(body);
+        return response.render("plateform-game", {
+          pageAccess: page.games,
+          parameterValue: pageParameters,
+          idParameterValue: idSelected,
+        });
+      },
+    );
+  } else {
+    apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
+      if (error) {
+        throw error;
+      }
+      const game = JSON.parse(body);
+      response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
+    });
+  }
 });
+
 /* ------ GAME-LIST END ------- */
 
 /* ------ GAME DETAILS  ------- */
@@ -51,20 +72,6 @@ app.get("/:idPlateform/:slugGame", (request, response) => {
   });
 });
 /* ------ GAME-DETAILS END  ------- */
-
-/* ------ PAGINATION  ------- */
-
-app.get("/:idPlateform?page=page_number", (request, response) => {
-  const queryParameters = request.query.page_number;
-  apiCaller(`http://videogame-api.fly.dev/games/${queryParameters}`, (error, body) => {
-    if (error) {
-      throw error;
-    }
-    const page = JSON.parse(body);
-    response.render("game-details", { page: page.pages, parameterValue: queryParameters });
-  });
-});
-/* ------ PAGINATION END  ------- */
 
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");

@@ -14,14 +14,31 @@ app.use(express.static("public"));
 
 /* ------ PLATEFORMS  ------- */
 app.get("/", (request, response) => {
-  apiCaller(`http://videogame-api.fly.dev/platforms`, (error, body) => {
-    if (error) {
-      throw error;
-    }
-    const plateform = JSON.parse(body);
-    response.render("home", { plateformsAccess: plateform.platforms });
-  });
+  const pageParameters = request.query.page?.toString();
+  if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
+    console.log(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`);
+    apiCaller(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`, (error, body) => {
+      if (error) {
+        throw error;
+      }
+      const page = JSON.parse(body);
+      console.log(42, page);
+      return response.render("home", {
+        plateformsAccess: page.platforms,
+        parameterValue: pageParameters,
+      });
+    });
+  } else {
+    apiCaller(`http://videogame-api.fly.dev/platforms`, (error, body) => {
+      if (error) {
+        throw error;
+      }
+      const plateform = JSON.parse(body);
+      response.render("home", { plateformsAccess: plateform.platforms });
+    });
+  }
 });
+
 /* ------ PLATEFORMS END  ------- */
 
 /* ------ GAME-LIST  ------- */
@@ -31,28 +48,31 @@ app.get("/:idPlateform", (request, response) => {
   console.log(31, request.query);
   const pageParameters = request.query.page?.toString();
   console.log(33, pageParameters);
-  if (pageParameters === "string" && parseInt(pageParameters) > 1) {
-    apiCaller(
-      `http://videogame-api.fly.dev/games/plateforms/${idSelected}?page=${parseInt(pageParameters)}`,
-      (error, body) => {
-        if (error) {
-          throw error;
-        }
-        const page = JSON.parse(body);
-        return response.render("plateform-game", {
-          pageAccess: page.games,
-          parameterValue: pageParameters,
-          idParameterValue: idSelected,
-        });
-      },
-    );
+  if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
+    apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}?page=${pageParameters}`, (error, body) => {
+      if (error) {
+        throw error;
+      }
+      const page = JSON.parse(body);
+      console.log(42, page);
+      return response.render("plateform-game", {
+        gamesAccess: page.games,
+        parameterValue: pageParameters,
+        idParameterValue: idSelected,
+      });
+    });
   } else {
     apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
       if (error) {
         throw error;
       }
       const game = JSON.parse(body);
-      response.render("plateform-game", { gamesAccess: game.games, parameterValue: idSelected });
+      console.log(56, game);
+      response.render("plateform-game", {
+        gamesAccess: game.games,
+        idParameterValue: idSelected,
+        parameterValue: pageParameters,
+      });
     });
   }
 });

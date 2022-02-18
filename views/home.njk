@@ -9,11 +9,24 @@
     <li>
       <a href = "/{{plateform.logo.url}}"><img class="image" src="{{plateform.logo.url}}" alt="{{plateform.name}}" /></a>
       <a href="/{{plateform.id}}">{{plateform.name}}</a>
-      <button><a href="/?page={{pageNumber+1}}">1</a></buuton>
+      {# <button><a href="/?page={{pageNumber+1}}">2</a></button> #}
     </li>
   {%else%}
     <li> It is empty </li>
   {%endfor%}
 {# ------ PLATEFORMS END ------- #}
+{# ------ PAGINATION ------- #}
+<div class="center">
+  <div class="pagination">
+  <a href="#">&laquo;</a>
+  <a href="/:idPlateform?page=page_number">1</a>
+  <a href="/:idPlateform?page=2" >2</a>
+  <a href="/:idPlateform?page=3">3</a>
+  <a href="/:idPlateform?page=4">4</a>
+  <a href="//:idPlateform?page=5">5</a>
+  <a href="/?page={{pageNumber+1}}">6</a>
+  <a href="">&raquo;</a>
+  </div>
+{# ------ PAGINATION END ------- #}
 {% endblock %}
 

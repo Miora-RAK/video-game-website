@@ -7,9 +7,8 @@
 
 {# ------ GAME-DETAILS ------- #}
   {%for game in detailsGame%}
-  <li>
-  <img class="image"href = "{{game.url}}"src="{{game.url}}"/>
-  </li>
+  <img class="img-fluid" style="width:30% "href = "{{game.url}}"src="{{game.url}}"/>
+
    {%else%}
   <li> It is empty </li>
   {%endfor%}

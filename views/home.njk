@@ -1,38 +1,6 @@
 {% extends "layout.njk" %}
 {% block content %}
 {# ------ TITLE ------- #}
-  <h1> Welcome to the GAMES CATALOGUE! </h1>
+  <h1 class="text-center" style = "padding:10rem"> Welcome to the GAMES CATALOGUE! </h1>
 {# ------ TITLE END------- #}
-
-{# ------ PLATEFORMS ------- #}
-  {%for plateform in plateformsAccess%}
-    <li>
-      <a href = "/{{plateform.logo.url}}"><img class="image" src="{{plateform.logo.url}}" alt="{{plateform.name}}" /></a>
-      <a href="/{{plateform.id}}">{{plateform.name}}</a>
-      {# <button><a href="/?page={{pageNumber+1}}">2</a></button> #}
-    </li>
-  {%else%}
-    <li> It is empty </li>
-  {%endfor%}
-{# ------ PLATEFORMS END ------- #}
-{# ------ PAGINATION ------- #}
-  </div class="center">
-  <div class="center">
-  <div class="pagination">
-  <a href="#">&laquo;</a>
-  <a href="?page=1">1</a>
-  <a href="?page=2" >2</a>
-  <a href="?page=3">3</a>
-  <a href="?page=4">4</a>
-  <a href="?page=5">5</a>
-  <a href="?page=6">6</a>
-  <a href="?page=7">7</a>
-  <a href="?page=8">8</a>
-  <a href="?page=9">9</a>
-  <a href="?page=10">&raquo;</a>
-  </div>
-
-    {# <a href="/?page={{pageNumber+1}}">6</a> #}
-{# ------ PAGINATION END ------- #}
 {% endblock %}
-

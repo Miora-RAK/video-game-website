@@ -6,16 +6,15 @@
 
 {# ------ GAME LIST ------- #}
   {%for game in gamesAccess%}
-      <li>
-         <img class="image" href = "/{{game.cover.url}}"src="{{game.cover.url}}" alt="{{game.name}}"/>
-         <a href="/{{game.id}}/{{game.name}}">{{game.name}}</a>
-      </li>
+  <a href="/{{game.id}}/{{game.name}}" class="btn btn-secondary"><img src="{{game.cover.url}}" class="img-fluid" alt="{{game.name}}">
+   </a>
   {%else%}
       <li> It is empty </li>
   {%endfor%}
+
+
 {# ------ GAME LIST END ------- #}
 {# ------ PAGINATION ------- #}
-</div class="center">
   <div class="center">
   <div class="pagination">
   <a href="#">&laquo;</a>

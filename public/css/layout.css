@@ -1,5 +1,5 @@
 /* ------ Reset ------- */
-*,
+/* *,
 ::before,
 ::after {
   box-sizing: border-box;
@@ -14,15 +14,15 @@ body {
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
-}
+} */
 
 /* ------ Title ------- */
-h1 {
+/* h1 {
   padding-top: 8em;
   text-align: center;
-}
+} */
 /* ------ List ------- */
-
+/*
 li {
   padding-top: 12em;
   padding-left: 5em;
@@ -36,7 +36,7 @@ a {
 .image {
   width: 50%;
   height: auto;
-}
+} */
 
 /* ------ Footer ------- */
 .center {

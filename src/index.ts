@@ -12,8 +12,14 @@ app.set("view engine", "njk");
 
 app.use(express.static("public"));
 
-/* ------ PLATEFORMS  ------- */
+/* ------ HOME  ------- */
 app.get("/", (request, response) => {
+  response.render("home");
+});
+/* ------ HOME END  ------- */
+
+/* ------ PLATEFORMS  ------- */
+app.get("/platforms", (request, response) => {
   const pageParameters = request.query.page?.toString();
   if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
     console.log(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`);
@@ -22,8 +28,7 @@ app.get("/", (request, response) => {
         throw error;
       }
       const page = JSON.parse(body);
-      console.log(42, page);
-      return response.render("home", {
+      return response.render("platforms", {
         plateformsAccess: page.platforms,
         parameterValue: pageParameters,
       });
@@ -34,7 +39,7 @@ app.get("/", (request, response) => {
         throw error;
       }
       const plateform = JSON.parse(body);
-      response.render("home", { plateformsAccess: plateform.platforms });
+      response.render("platforms", { plateformsAccess: plateform.platforms });
     });
   }
 });
@@ -54,7 +59,6 @@ app.get("/:idPlateform", (request, response) => {
         throw error;
       }
       const page = JSON.parse(body);
-      console.log(42, page);
       return response.render("plateform-game", {
         gamesAccess: page.games,
         parameterValue: pageParameters,
@@ -67,7 +71,6 @@ app.get("/:idPlateform", (request, response) => {
         throw error;
       }
       const game = JSON.parse(body);
-      console.log(56, game);
       response.render("plateform-game", {
         gamesAccess: game.games,
         idParameterValue: idSelected,

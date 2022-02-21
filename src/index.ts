@@ -1,6 +1,6 @@
 import express from "express";
 import nunjucks from "nunjucks";
-import apiCaller from "@fewlines-education/request";
+import fetch from "node-fetch";
 
 const app = express();
 
@@ -22,25 +22,26 @@ app.get("/", (request, response) => {
 app.get("/platforms", (request, response) => {
   const pageParameters = request.query.page?.toString();
   if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
-    console.log(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`);
-    apiCaller(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`, (error, body) => {
-      if (error) {
-        throw error;
-      }
-      const page = JSON.parse(body);
-      return response.render("platforms", {
-        plateformsAccess: page.platforms,
-        parameterValue: pageParameters,
+    fetch(`http://videogame-api.fly.dev/platforms?page=${pageParameters}`)
+      .then((response) => response.json())
+      .then((page) => {
+        return response.render("platforms", {
+          plateformsAccess: page.platforms,
+          parameterValue: pageParameters,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    });
   } else {
-    apiCaller(`http://videogame-api.fly.dev/platforms`, (error, body) => {
-      if (error) {
-        throw error;
-      }
-      const plateform = JSON.parse(body);
-      response.render("platforms", { plateformsAccess: plateform.platforms });
-    });
+    fetch(`http://videogame-api.fly.dev/platforms`)
+      .then((response) => response.json())
+      .then((plateform) => {
+        return response.render("platforms", { plateformsAccess: plateform.platforms });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 });
 
@@ -54,46 +55,49 @@ app.get("/:idPlateform", (request, response) => {
   const pageParameters = request.query.page?.toString();
   console.log(33, pageParameters);
   if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
-    apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}?page=${pageParameters}`, (error, body) => {
-      if (error) {
-        throw error;
-      }
-      const page = JSON.parse(body);
-      return response.render("plateform-game", {
-        gamesAccess: page.games,
-        parameterValue: pageParameters,
-        idParameterValue: idSelected,
+    fetch(`http://videogame-api.fly.dev/games/platforms/${idSelected}?page=${pageParameters}`)
+      .then((response) => response.json())
+      .then((page) => {
+        return response.render("plateform-game", {
+          gamesAccess: page.games,
+          parameterValue: pageParameters,
+          idParameterValue: idSelected,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    });
   } else {
-    apiCaller(`http://videogame-api.fly.dev/games/platforms/${idSelected}`, (error, body) => {
-      if (error) {
-        throw error;
-      }
-      const game = JSON.parse(body);
-      response.render("plateform-game", {
-        gamesAccess: game.games,
-        idParameterValue: idSelected,
-        parameterValue: pageParameters,
+    fetch(`http://videogame-api.fly.dev/games/platforms/${idSelected}`)
+      .then((response) => response.json())
+      .then((game) => {
+        return response.render("plateform-game", {
+          gamesAccess: game.games,
+          idParameterValue: idSelected,
+          parameterValue: pageParameters,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
       });
-    });
   }
 });
-
 /* ------ GAME-LIST END ------- */
 
 /* ------ GAME DETAILS  ------- */
 app.get("/:idPlateform/:slugGame", (request, response) => {
   const slugParameters = request.params;
   const slugSelected = slugParameters.idPlateform;
-  apiCaller(`http://videogame-api.fly.dev/games/${slugSelected}`, (error, body) => {
-    if (error) {
-      throw error;
-    }
-    const gameDetails = JSON.parse(body);
-    response.render("game-details", { detailsGame: gameDetails.screenshots, parameterValue: slugSelected });
-  });
+  fetch(`http://videogame-api.fly.dev/games/${slugSelected}`)
+    .then((response) => response.json())
+    .then((result) => {
+      return response.render("game-details", { detailsGame: result.screenshots, parameterValue: slugSelected });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
+
 /* ------ GAME-DETAILS END  ------- */
 
 app.listen(3000, () => {

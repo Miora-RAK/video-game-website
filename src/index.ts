@@ -51,9 +51,9 @@ app.get("/platforms", (request, response) => {
 app.get("/:idPlateform", (request, response) => {
   const idParameters = request.params;
   const idSelected = idParameters.idPlateform;
-  console.log(31, request.query);
+  console.log(58, request.query);
   const pageParameters = request.query.page?.toString();
-  console.log(33, pageParameters);
+  console.log(60, pageParameters);
   if (typeof pageParameters === "string" && parseInt(pageParameters) > 1) {
     fetch(`http://videogame-api.fly.dev/games/platforms/${idSelected}?page=${pageParameters}`)
       .then((response) => response.json())
